@@ -158,6 +158,9 @@ func handleApiProxyWithRetry(c *gin.Context, targetURL string, bodyBytes []byte,
 		// 设置 Authorization header
 		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
 
+		// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+		req.Header.Set("Accept-Encoding", "identity")
+
 		// 创建 HTTP 客户端
 		client := utils.CreateClient()
 
@@ -269,6 +272,9 @@ func processApiRequest(c *gin.Context, targetURL string, bodyBytes []byte, reque
 
 	// 设置 Authorization header
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
+
+	// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+	req.Header.Set("Accept-Encoding", "identity")
 
 	// 创建 HTTP 客户端
 	client := utils.CreateClient()
@@ -733,6 +739,9 @@ func handleOpenAIProxyWithRetry(c *gin.Context, targetURL string, transformedBod
 		// 设置 Content-Type header
 		req.Header.Set("Content-Type", "application/json")
 
+		// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+		req.Header.Set("Accept-Encoding", "identity")
+
 		// 创建 HTTP 客户端
 		client := utils.CreateClient()
 
@@ -936,6 +945,9 @@ func handleOpenAIStreamRequest(c *gin.Context, targetURL string, transformedBody
 		req.Header.Set("X-DeepSeek-Priority", "high") // 自定义头，可能会被忽略，但不影响
 	}
 
+	// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+	req.Header.Set("Accept-Encoding", "identity")
+
 	// 创建 HTTP 客户端，根据模型类型选择合适的超时设置
 	var client *http.Client
 	if isDeepseekR1 {
@@ -1109,6 +1121,9 @@ func processOpenAIRequest(c *gin.Context, targetURL string, transformedBody []by
 	// 设置 Content-Type header
 	req.Header.Set("Content-Type", "application/json")
 
+	// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+	req.Header.Set("Accept-Encoding", "identity")
+
 	// 创建 HTTP 客户端
 	client := utils.CreateClient()
 
@@ -1219,6 +1234,9 @@ func HandleModelsRequest(c *gin.Context, apiKey string) {
 	// 设置请求头
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
+	// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+	req.Header.Set("Accept-Encoding", "identity")
+
 	// 创建HTTP客户端
 	client := utils.CreateClient()
 
@@ -1958,6 +1976,9 @@ func forwardUserInfoRequest(c *gin.Context, targetURL string) {
 
 	// 设置 Content-Type header
 	req.Header.Set("Content-Type", "application/json")
+
+	// 明确指定不接受压缩响应，避免 Cloudflare 返回 br 压缩格式
+	req.Header.Set("Accept-Encoding", "identity")
 
 	// 创建 HTTP 客户端
 	client := utils.CreateClient()

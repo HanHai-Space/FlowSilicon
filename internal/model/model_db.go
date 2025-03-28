@@ -200,6 +200,7 @@ func fetchRemoteModels(baseURL string) ([]string, int, error) {
 	apikeys := config.GetActiveApiKeys()
 	req.Header.Set("Authorization", "Bearer "+apikeys[0].Key)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept-Encoding", "identity")
 
 	// 发送请求
 	client := &http.Client{}

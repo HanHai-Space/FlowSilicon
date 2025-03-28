@@ -1275,6 +1275,7 @@ func handleApiKeyProxy(c *gin.Context) {
 	// 添加授权头
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", authToken))
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept-Encoding", "identity") // 明确指定不接受压缩响应
 
 	// 创建HTTP客户端并发送请求
 	client := &http.Client{
@@ -1431,6 +1432,7 @@ func fetchRemoteModels(baseURL string) ([]string, int, error) {
 	apikeys := config.GetActiveApiKeys()
 	req.Header.Set("Authorization", "Bearer "+apikeys[0].Key)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept-Encoding", "identity") // 明确指定不接受压缩响应
 
 	// 发送请求
 	client := &http.Client{}
